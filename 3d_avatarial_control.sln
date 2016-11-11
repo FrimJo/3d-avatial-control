@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{543941A4-9C48-97DE-1E55-9C28E9FF3A5B}") = "3d_avatarial_control", "Assembly-CSharp.csproj", "{B125336B-EDAF-8C35-5CB0-C2A7B19106DD}"
+EndProject
+Project("{543941A4-9C48-97DE-1E55-9C28E9FF3A5B}") = "3d_avatarial_control", "Assembly-CSharp-Editor.csproj", "{2495FB80-5F75-F843-E851-21D317A7D6B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B125336B-EDAF-8C35-5CB0-C2A7B19106DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B125336B-EDAF-8C35-5CB0-C2A7B19106DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B125336B-EDAF-8C35-5CB0-C2A7B19106DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B125336B-EDAF-8C35-5CB0-C2A7B19106DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2495FB80-5F75-F843-E851-21D317A7D6B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2495FB80-5F75-F843-E851-21D317A7D6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2495FB80-5F75-F843-E851-21D317A7D6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2495FB80-5F75-F843-E851-21D317A7D6B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
