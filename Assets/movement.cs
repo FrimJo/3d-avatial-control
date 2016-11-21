@@ -7,7 +7,9 @@ public class movement : MonoBehaviour {
     public Transform cam;
     public GameObject projectile;
     public int rateOfFire;
-    
+    public float mouseSens = 1000000.0f;
+
+
     public bool grounded;
     public float maxVelocityChange;
     public float jumpHeight;
@@ -16,23 +18,64 @@ public class movement : MonoBehaviour {
     private Vector3 shootTarget;
     private Rigidbody rigidbody;
     private float timer;
+    private bool _newControl = true;
 
+    public bool newControl
+    {
+        get
+        {
+            return _newControl;
+        }
+        set
+        {
+            _newControl = value;
+            //Cursor.visible = _newControl;
+
+            // Set the position of the camera
+            if (!_newControl)
+            {
+                // Set the cam behind teh avatar
+                var p = transform.position;
+
+                var dist = Vector3.Distance(cam.transform.position, transform.position);
+                dist = dist > 20.0f ? 20.0f : dist;
+                dist = dist < 0.0f ? 0.0f : dist;
+                
+                cam.transform.position = new Vector3(p.x, p.y + (20.0f - dist) + 5.0f, p.z - (20.0f - dist) + 5.0f);
+
+                // Rotate the avatar away from the camera
+                transform.forward = cam.forward;
+                transform.rotation = new Quaternion(0.0f, transform.rotation.y, 0.0f, transform.rotation.w);
+
+                
+            }
+
+            
+        }
+    }
 
     // Use this for initialization
     void Start () {
+        Cursor.visible = false;
         rigidbody = GetComponent<Rigidbody>();
         timer = Time.realtimeSinceStartup;
     }
+
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+        
 
         if (grounded)
         {
 
             var targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-           
-            targetVelocity = cam.transform.TransformDirection(targetVelocity);
+
+            //if (newControl){
+                targetVelocity = cam.transform.TransformDirection(targetVelocity);
+            //}
+
             targetVelocity *= speed;
             var velocityChange = (targetVelocity - rigidbody.velocity);
             velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
@@ -43,26 +86,48 @@ public class movement : MonoBehaviour {
 
         }
 
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        var hit = new RaycastHit();
-
-        if (Physics.Raycast(ray, out hit))
+        if (newControl)
         {
-            lookTarget = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            shootTarget = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-        }
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var hit = new RaycastHit();
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                lookTarget = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                shootTarget = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            }
         
-        rigidbody.transform.LookAt(lookTarget);
+            rigidbody.transform.LookAt(lookTarget);
+            
+        }
+        else
+        {
+            // Rotate the dude according to mouse
+            var mouseX = Input.GetAxis("Mouse X");
+            transform.Rotate(Vector3.up * mouseX * 1000.0f * Time.deltaTime);
+        }
         grounded = false;
 
     }
 
-    void shoot()
-    {
+    void shoot() { 
+
+
         var position = transform.position;
-        var direction = transform.forward;
-        var test = shootTarget - position;
-        test.Normalize();
+        var forward = transform.forward;
+        Vector3 direction;
+
+        if (newControl)
+        {
+
+            direction = shootTarget - position;
+            direction.Normalize();
+
+            
+        } else
+        {
+            direction = transform.forward;
+        }
 
         projectile p = Instantiate(projectile).GetComponent<projectile>();
 
@@ -70,12 +135,13 @@ public class movement : MonoBehaviour {
         p.transform.position = position;// + direction;
 
         // Set travel direction
-        p.transform.forward = direction;
+        p.transform.forward = forward;
 
         Rigidbody pBody = p.GetComponent<Rigidbody>();
         pBody.velocity = new Vector3(.0f, .0f, .0f);
 
-        pBody.velocity = test * p.speed;
+        pBody.velocity = direction * p.speed;
+
     }
 
     void Update()
@@ -92,7 +158,7 @@ public class movement : MonoBehaviour {
         }
 
         
-        if (Input.GetMouseButton(1) || Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
         {
             
             Debug.Log(Time.realtimeSinceStartup - timer);
@@ -106,6 +172,12 @@ public class movement : MonoBehaviour {
                 shoot();
             }
             
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            newControl = !newControl;
+            Debug.Log("Controll toggled: " + newControl);
         }
     }
 

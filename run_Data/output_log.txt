@@ -1,0 +1,80 @@
+Initialize engine version: 5.4.0f3-HTP (b21dfedb4779)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 970 (ID=0x13c2)
+    Vendor:   NVIDIA
+    VRAM:     3072 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\unity_projects\3d_avatarial_control\run_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\unity_projects\3d_avatarial_control\run_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\unity_projects\3d_avatarial_control\run_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\unity_projects\3d_avatarial_control\run_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\unity_projects\3d_avatarial_control\run_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\unity_projects\3d_avatarial_control\run_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\unity_projects\3d_avatarial_control\run_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\unity_projects\3d_avatarial_control\run_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\unity_projects\3d_avatarial_control\run_Data\Managed\UnityEngine.VR.dll (this message is harmless)
+Loading D:\unity_projects\3d_avatarial_control\run_Data\Managed\UnityEngine.VR.dll into Unity Child Domain
+- Completed reload, in  0.127 seconds
+Platform assembly: D:\unity_projects\3d_avatarial_control\run_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\unity_projects\3d_avatarial_control\run_Data\Managed\System.dll (this message is harmless)
+OnLevelWasLoaded was found on OVRScreenFade
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
+ 
+(Filename:  Line: 375)
+
+desktop: 2560x1440 144Hz; virtual: 3840x1440 at 0,0
+<RI> Initializing input.
+XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
+<RI> Input initialized.
+desktop: 1280x800 60Hz; virtual: 3840x1440 at 0,0
+<RI> Initialized touch support.
+Compositor failed to initialize.Compositor failed to initialize.UnloadTime: 0.580463 ms
+Unity v5.4.0f3-HTP, Oculus Utilities v1.9.0, OVRPlugin v1.5.0, SDK v0.0.0.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+90
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: ff0 -> priority: 1 
+HealthBar (HealthBar)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Controll toggled: False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+HealthBar (HealthBar)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Jump!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+HealthBar (HealthBar)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Jump!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+HealthBar (HealthBar)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+HealthBar (HealthBar)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+HealthBar (HealthBar)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
