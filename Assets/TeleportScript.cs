@@ -15,6 +15,13 @@ public class TeleportScript : MonoBehaviour {
     private Vector3 target;
     private Transform targetTransform;
     private movement _movement;
+    private Quaternion _defaultQuat;
+
+    public Quaternion defaultQuat {
+        get {
+            return _defaultQuat;
+        }
+    }
 
     private bool newControl {
         get
@@ -22,6 +29,7 @@ public class TeleportScript : MonoBehaviour {
             return _movement.newControl;
         }
     }
+
 	// Use this for initialization
 	void Start()
     {
@@ -31,6 +39,9 @@ public class TeleportScript : MonoBehaviour {
         discStartPosition = disc.transform.position.y;
         discStartSize = disc.transform.localScale;
 
+        var leftEyeAnchor = this.gameObject.transform.GetChild(0).GetChild(0);
+        _defaultQuat = Quaternion.Inverse(leftEyeAnchor.rotation);
+        
         // Set default target
         target = this.transform.position;
         lookAtPlayer();
@@ -47,8 +58,21 @@ public class TeleportScript : MonoBehaviour {
             {
                 // add the camera to the dude
                 transform.SetParent(cameraHouse.transform);
+
             }
 
+            // Rotate the camera according to mouse
+            var mouseY = Input.GetAxis("Mouse Y");
+
+            var angle = transform.parent.rotation.eulerAngles.x + (mouseY * 1000.0f * Time.deltaTime);
+
+            //if (angle < 0 || angle > -90)
+            //{
+            // Perform rotation
+            var q = transform.parent.rotation;
+            transform.parent.rotation = Quaternion.Euler(angle, q.eulerAngles.y, q.eulerAngles.z);
+
+            //}
         }
         else
         {
@@ -91,7 +115,11 @@ public class TeleportScript : MonoBehaviour {
     private void lookAtPlayer()
     {
         this.transform.position = new Vector3(target.x, this.transform.position.y, target.z);
-        this.transform.LookAt(dude.transform.position);
+        var lookAt = dude.transform.position;
+        lookAt.y = this.transform.position.y;
+        this.transform.LookAt(lookAt);
+        this.transform.rotation = this.transform.rotation * _defaultQuat;
+     
     }
 
     void updateTarget()

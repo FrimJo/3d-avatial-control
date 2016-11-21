@@ -18,6 +18,7 @@ public class movement : MonoBehaviour {
     private Vector3 shootTarget;
     private Rigidbody rigidbody;
     private float timer;
+    private Quaternion _defaultQuat;
     private bool _newControl = true;
 
     public bool newControl
@@ -26,28 +27,37 @@ public class movement : MonoBehaviour {
         {
             return _newControl;
         }
+
         set
         {
             _newControl = value;
+            var camScript = cam.gameObject.GetComponent<TeleportScript>();
+            _defaultQuat = camScript.defaultQuat;
             //Cursor.visible = _newControl;
 
             // Set the position of the camera
             if (!_newControl)
             {
-                // Set the cam behind teh avatar
-                var p = transform.position;
-
+               
+  
+                // Get the distance from the avatar to the camera
                 var dist = Vector3.Distance(cam.transform.position, transform.position);
                 dist = dist > 20.0f ? 20.0f : dist;
                 dist = dist < 0.0f ? 0.0f : dist;
-                
-                cam.transform.position = new Vector3(p.x, p.y + (20.0f - dist) + 5.0f, p.z - (20.0f - dist) + 5.0f);
 
-                // Rotate the avatar away from the camera
-                transform.forward = cam.forward;
+                // Position the camera behind the avatar and rotate the camera to look straight
+                var p = transform.position;
+                cam.transform.position = new Vector3(p.x, p.y + (20.0f - dist) + 5.0f, p.z - (20.0f - dist) + 5.0f);
+                cam.transform.LookAt(new Vector3(transform.position.x, transform.position.y, transform.position.z));
+                cam.transform.rotation = cam.transform.rotation * _defaultQuat;
+
+                // Set the avatar to look away from the camera
+                transform.forward = -cam.forward;
                 transform.rotation = new Quaternion(0.0f, transform.rotation.y, 0.0f, transform.rotation.w);
 
                 
+
+
             }
 
             
@@ -103,8 +113,18 @@ public class movement : MonoBehaviour {
         else
         {
             // Rotate the dude according to mouse
-            var mouseX = Input.GetAxis("Mouse X");
-            transform.Rotate(Vector3.up * mouseX * 1000.0f * Time.deltaTime);
+            //var mouseX = Input.GetAxis("Mouse X");
+            //transform.Rotate(Vector3.up * mouseX * 1000.0f * Time.deltaTime);
+
+            //
+            
+
+            //transform.Rotate(Vector3.right * mouseY * 1000.0f * Time.deltaTime);
+
+            //var a = transform.rotation.eulerAngles.x;
+
+            
+
         }
         grounded = false;
 

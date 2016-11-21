@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{014CBAFB-8872-246D-FEFB-0FD811217CDE}") = "3d-avatial-control", "Assembly-CSharp.csproj", "{AEE5EF1E-30D2-5DDC-2B5A-189A71F60464}"
+EndProject
+Project("{014CBAFB-8872-246D-FEFB-0FD811217CDE}") = "3d-avatial-control", "Assembly-CSharp-Editor.csproj", "{5FE6C64E-0C3D-02EB-97E9-E81B1ADC8D61}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEE5EF1E-30D2-5DDC-2B5A-189A71F60464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEE5EF1E-30D2-5DDC-2B5A-189A71F60464}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEE5EF1E-30D2-5DDC-2B5A-189A71F60464}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEE5EF1E-30D2-5DDC-2B5A-189A71F60464}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FE6C64E-0C3D-02EB-97E9-E81B1ADC8D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FE6C64E-0C3D-02EB-97E9-E81B1ADC8D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FE6C64E-0C3D-02EB-97E9-E81B1ADC8D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FE6C64E-0C3D-02EB-97E9-E81B1ADC8D61}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{2495FB80-5F75-F843-E851-21D317A7D6B9}</ProjectGuid>
+    <ProjectGuid>{5FE6C64E-0C3D-02EB-97E9-E81B1ADC8D61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -90,16 +90,13 @@
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Program Files/Unity HoloLens 5.4.0f3-HTP/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.Metro.Extensions">
- <HintPath>C:/Program Files/Unity HoloLens 5.4.0f3-HTP/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.Metro.Extensions.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity HoloLens 5.4.0f3-HTP/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{B125336B-EDAF-8C35-5CB0-C2A7B19106DD}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{AEE5EF1E-30D2-5DDC-2B5A-189A71F60464}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
