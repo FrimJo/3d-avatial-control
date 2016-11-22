@@ -17,10 +17,11 @@ public class movement : MonoBehaviour {
     private Vector3 lookTarget;
     private Vector3 shootTarget;
     private Rigidbody rigidbody;
+    private Transform cameraHouse;
     private float timer;
-    private Quaternion _defaultQuat;
     private bool _newControl = true;
-
+    private Quaternion _defaultQuat;
+    private float _defaultCameraHeight;
     public bool newControl
     {
         get
@@ -30,38 +31,48 @@ public class movement : MonoBehaviour {
 
         set
         {
+            //var camScript = cam.gameObject.GetComponent<TeleportScript>();
+            //_defaultQuat = camScript.defaultQuat;
+
             _newControl = value;
-            var camScript = cam.gameObject.GetComponent<TeleportScript>();
-            _defaultQuat = camScript.defaultQuat;
+            
             //Cursor.visible = _newControl;
 
             // Set the position of the camera
             if (!_newControl)
             {
-               
-  
-                // Get the distance from the avatar to the camera
-                var dist = Vector3.Distance(cam.transform.position, transform.position);
-                dist = dist > 20.0f ? 20.0f : dist;
-                dist = dist < 0.0f ? 0.0f : dist;
 
-                // Position the camera behind the avatar and rotate the camera to look straight
-                var p = transform.position;
-                cam.transform.position = new Vector3(p.x, p.y + (20.0f - dist) + 5.0f, p.z - (20.0f - dist) + 5.0f);
-                cam.transform.LookAt(new Vector3(transform.position.x, transform.position.y, transform.position.z));
-                cam.transform.rotation = cam.transform.rotation * _defaultQuat;
+                // Position the camera behind the avatar
+                positionCameraBehindAvatar();
 
-                // Set the avatar to look away from the camera
-                transform.forward = -cam.forward;
-                transform.rotation = new Quaternion(0.0f, transform.rotation.y, 0.0f, transform.rotation.w);
+                // Add the camera to the Camera House
+                cam.SetParent(cameraHouse);
 
-                
+                //cameraHouse.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
 
+
+            } else
+            {
+                // Remove the camera from the camera house
+                cam.SetParent(null);
+
+                // Reset the hight position of the camera
+                cam.transform.position = new Vector3(cam.transform.position.x, _defaultCameraHeight, cam.transform.position.z);
             }
 
             
         }
+    }
+
+    public void positionCameraBehindAvatar()
+    {
+        // Position the camera behind the avatar
+        cam.transform.position = transform.position - (transform.forward * 20.0f);// + (transform.up * 20.0f);
+        cam.transform.forward = transform.forward;
+
+        // Compensate for the sensor
+        cam.transform.rotation = cam.transform.rotation * _defaultQuat;
     }
 
     // Use this for initialization
@@ -69,6 +80,15 @@ public class movement : MonoBehaviour {
         Cursor.visible = false;
         rigidbody = GetComponent<Rigidbody>();
         timer = Time.realtimeSinceStartup;
+
+        var camScript = cam.gameObject.GetComponent<TeleportScript>();
+        _defaultQuat = camScript.defaultQuat;
+        _defaultCameraHeight = cam.transform.position.y;
+
+
+        // Set the cameraHouse
+        cameraHouse = transform.GetChild(0);
+        
     }
 
 	
@@ -82,9 +102,23 @@ public class movement : MonoBehaviour {
 
             var targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-            //if (newControl){
+            if (newControl){
+
+                // Compoensate for sensor
+
+                var q = Quaternion.AngleAxis(_defaultQuat.eulerAngles.z, Vector3.up);
+                targetVelocity = q * targetVelocity;
+
                 targetVelocity = cam.transform.TransformDirection(targetVelocity);
-            //}
+                
+                // Compensate for the sensor
+                //cam.transform.rotation = cam.transform.rotation * _defaultQuat;
+            }
+            else
+            {
+                targetVelocity = transform.TransformDirection(targetVelocity);
+
+            }
 
             targetVelocity *= speed;
             var velocityChange = (targetVelocity - rigidbody.velocity);
@@ -112,18 +146,33 @@ public class movement : MonoBehaviour {
         }
         else
         {
-            // Rotate the dude according to mouse
-            //var mouseX = Input.GetAxis("Mouse X");
-            //transform.Rotate(Vector3.up * mouseX * 1000.0f * Time.deltaTime);
+            // Rotate the dude according to mouse X
+            var mouseX = Input.GetAxis("Mouse X");
+            transform.Rotate(Vector3.up * mouseX * 100.0f * Time.deltaTime);
 
-            //
-            
+            /* Rotate camera house according to mouse Y */
+            var mouseY = Input.GetAxis("Mouse Y");
 
-            //transform.Rotate(Vector3.right * mouseY * 1000.0f * Time.deltaTime);
+            // If we have rotation
+            if(mouseY != 0)
+            {
+                // Get current rotation for right
+                var calculatedAngle = cameraHouse.rotation.eulerAngles;
 
-            //var a = transform.rotation.eulerAngles.x;
+                // Calc extra rotation based on sens and time
+                var extraAngle = Vector3.right * -mouseY * 100.0f * Time.deltaTime;
 
-            
+                // Add the extra rotation for right
+                calculatedAngle += extraAngle;
+
+                // Check to see if it is to bigg or small
+
+                if (calculatedAngle.x > 0.0f && calculatedAngle.x < 75.0f)
+                {
+                    //Add the rotation to the camera house
+                    cameraHouse.rotation = Quaternion.Euler(calculatedAngle.x, calculatedAngle.y, calculatedAngle.z);
+                }
+            }
 
         }
         grounded = false;
@@ -170,24 +219,20 @@ public class movement : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
-            Debug.Log("Jump!");
-            //rigidbody.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.VelocityChange);
+            
             rigidbody.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
            
-            //transform.Translate(Vector3.up * jumpHeight * Time.deltaTime, Space.World);
         }
 
         
         if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
         {
             
-            Debug.Log(Time.realtimeSinceStartup - timer);
-            Debug.Log(Time.realtimeSinceStartup);
             
             // If enough time pasted sice last shoot
             if (Time.realtimeSinceStartup - timer >= 1.0f/rateOfFire)
             {
-                Debug.Log("shoot!");
+
                 timer = Time.realtimeSinceStartup;
                 shoot();
             }
@@ -197,7 +242,7 @@ public class movement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.T))
         {
             newControl = !newControl;
-            Debug.Log("Controll toggled: " + newControl);
+
         }
     }
 

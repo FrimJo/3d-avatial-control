@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System;
 
 public class zombie : MonoBehaviour {
 
     public GameObject target;
     public float speed;
     public int hp;
+    public Text uiCounter;
 
     private Rigidbody thisBody;
     private Rigidbody targetBody;
     private HealthBar healthBar;
+    private static int count = 0;
 
     // Use this for initialization
     void Start () {
@@ -18,6 +22,7 @@ public class zombie : MonoBehaviour {
         healthBar = transform.FindChild("HealthBar").gameObject.GetComponent("HealthBar") as HealthBar;
         Debug.Log(healthBar);
         healthBar.setWidth(hp);
+        uiCounter.text = "" + count.ToString();
     }
 
     // Update is called once per frame
@@ -27,13 +32,10 @@ public class zombie : MonoBehaviour {
         var targetPosition = targetBody.transform.position;
         var selfPosition = thisBody.transform.position;
         
-        
         // Move towards it
         var directionVector = targetPosition - selfPosition;
         var normDirectionVector = directionVector.normalized;
         normDirectionVector.y = 0.0f;
-        //Debug.Log(normDirectionVector.ToString());
-
 
         // Set direction
         thisBody.transform.LookAt(targetPosition);
@@ -48,7 +50,7 @@ public class zombie : MonoBehaviour {
 
     void OnCollisionStay(Collision collision)
     {
-        // Get the collideing game object
+        // Get the collideing game objectsssssdw
         GameObject gameObject = collision.collider.gameObject;
 
         // Get projectile componenet
@@ -71,8 +73,20 @@ public class zombie : MonoBehaviour {
             // If zombie is dead
             if (isDead())
             {
+                Debug.Log("Zombie died");
+
                 // Destroy it
                 Destroy(this.gameObject);
+
+                // Increment the counter
+            
+                Debug.Log(count);
+                count++;
+                uiCounter.text = "" + count.ToString();
+                
+                Debug.Log(count);
+                Debug.Log(uiCounter.text);
+
             }
 
    

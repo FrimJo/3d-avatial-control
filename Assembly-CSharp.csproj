@@ -80,6 +80,7 @@
      <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
      <Compile Include="Assets\OVR\Scripts\Util\OVRWaitCursor.cs" />
      <Compile Include="Assets\TeleportScript.cs" />
+     <Compile Include="Assets\Timer.cs" />
      <Compile Include="Assets\ZombieSpawner.cs" />
      <Compile Include="Assets\movement.cs" />
      <Compile Include="Assets\projectile.cs" />
